@@ -1,0 +1,10 @@
+[Unit]
+Description=MEXC pump-fader: сбор архива истории
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=PYTHONUNBUFFERED=1
+WorkingDirectory=%h/Документы/mexc-pump-fader
+ExecStart=%h/Документы/mexc-pump-fader/scripts/collect_archive.sh

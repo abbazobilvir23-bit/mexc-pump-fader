@@ -1,0 +1,17 @@
+[Unit]
+Description=MEXC pump-fader: Telegram-бот статистики
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+Environment=PYTHONUNBUFFERED=1
+# ВНИМАНИЕ: подставь свой путь к проекту
+WorkingDirectory=%h/Документы/mexc-pump-fader
+EnvironmentFile=%h/Документы/mexc-pump-fader/.env
+ExecStart=%h/Документы/mexc-pump-fader/.venv/bin/mpf bot --data-dir data --run follow
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target

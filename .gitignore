@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# Данные и секреты
+data/
+backups/
+*.jsonl
+*.parquet
+.env
+.env.local
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Локальные тестовые зависимости
+.testdeps/

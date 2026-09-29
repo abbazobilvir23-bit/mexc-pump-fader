@@ -1,0 +1,71 @@
+# Общие настройки для всех сервисов
+x-common: &common
+  build: .
+  image: mpf:latest
+  env_file:
+    - .env
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+services:
+  # Сбор истории MEXC (5m для стратегии, 1m для архива). Раз в 2 часа.
+  collect:
+    <<: *common
+    volumes:
+      - ./data:/app/data
+    command: ["bash", "scripts/docker_collect_loop.sh"]
+
+  # Paper-торговля по сигналам канала (виртуальный депозит $100)
+  follow:
+    <<: *common
+    volumes:
+      - ./data:/app/data
+    command:
+      - mpf
+      - follow
+      - --config
+      - config/optimized_5m.json
+      - --poll
+      - "30"
+      - --equity
+      - "100"
+      - --take-existing
+      - "3"
+      - --maker
+      - --out
+      - data/follow
+    depends_on:
+      - collect
+
+  # Telegram-бот статистики
+  bot:
+    <<: *common
+    volumes:
+      - ./data:/app/data
+    command:
+      - mpf
+      - bot
+      - --data-dir
+      - data
+      - --run
+      - follow
+      - --equity
+      - "100"
+      - --backtest-data
+      - data/history_5m.jsonl
+      - --backtest-config
+      - config/optimized_5m.json
+    depends_on:
+      - collect
+
+  # Ежедневный бэкап data/ с ротацией (хранит последние 7)
+  backup:
+    <<: *common
+    volumes:
+      - ./data:/app/data
+      - ./backups:/app/backups
+    command: ["bash", "scripts/docker_backup_loop.sh"]

@@ -1,0 +1,22 @@
+{
+  "pump_lookback": 15,
+  "pump_threshold_pct": 10.0,
+  "volume_lookback": 60,
+  "volume_mult": 3.0,
+  "rsi_period": 14,
+  "rsi_overbought": 75.0,
+  "entry_pullback_pct": 0.0,
+  "entry_timeout_candles": 10,
+  "min_quote_volume_24h": 200000.0,
+  "max_quote_volume_24h": 5000000.0,
+  "max_averages": 3,
+  "avg_step_pct": 5.0,
+  "avg_size_mult": 1.0,
+  "take_profit_pct": 2.0,
+  "stop_loss_pct": 20.0,
+  "use_stop_loss": false,
+  "position_pct": 20.0,
+  "risk_per_trade_pct": 1.0,
+  "fee_pct": 0.06,
+  "slippage_pct": 0.15
+}
